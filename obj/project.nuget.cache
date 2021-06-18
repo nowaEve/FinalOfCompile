@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "LrlksEA6Plmn99HeLbX0/PibhdUHxEO5sRSn2lNzyb/FogWdfavFA6Gb6q1SFWQZJjJCDuE9P9nDkJwLe03Y2A==",
+  "success": true,
+  "projectFilePath": "D:\\Desktop\\学习\\2020-2021下\\编程语言原理与编译\\finalProj\\FinalProj\\FinalProj.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\飞天小女警\\.nuget\\packages\\fsharp.core\\5.0.0\\fsharp.core.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
