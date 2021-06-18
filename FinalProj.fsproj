@@ -5,8 +5,18 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+<ItemGroup>
+<FsLex Include="MyLex.fsl">
+  <OtherFlags>--module CLex --unicode</OtherFlags>
+</FsLex>
+<FsYacc Include="MyPar.fsy">
+    <OtherFlags>--module CPar</OtherFlags>
+</FsYacc>
+    <Compile Include="AbstractSyntax.fs" />
+  </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Program.fs" />
+    <PackageReference Include="FsLexYacc" Version="10.2.0" />
   </ItemGroup>
 
 </Project>
