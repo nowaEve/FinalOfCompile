@@ -1,11 +1,11 @@
-module CLex
+module MyLex
 # 1 "MyLex.fsl"
  
  
-module CubyLex
+module MyLex=
   
-open Microsoft.FSharp.Text.Lexing
-open CubyPar;
+open FSharp.Text.Lexing
+open MyPar;
 
 let lexemeAsString lexbuf = 
     LexBuffer<char>.LexemeString lexbuf

@@ -1,9 +1,9 @@
 {
  
-module CubyLex
+module MyLex=
   
 open Microsoft.FSharp.Text.Lexing
-open CubyPar;
+open MyPar;
 
 let lexemeAsString lexbuf = 
     LexBuffer<char>.LexemeString lexbuf
