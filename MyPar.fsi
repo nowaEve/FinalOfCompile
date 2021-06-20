@@ -32,6 +32,11 @@ type token =
   | MOD
   | SELFPLUS
   | SELFMINUS
+  | PLUSEQ
+  | MINUSEQ
+  | TIMESEQ
+  | DIVEQ
+  | MODEQ
   | STRUCT
   | DOT
   | TRY
@@ -93,6 +98,11 @@ type tokenId =
     | TOKEN_MOD
     | TOKEN_SELFPLUS
     | TOKEN_SELFMINUS
+    | TOKEN_PLUSEQ
+    | TOKEN_MINUSEQ
+    | TOKEN_TIMESEQ
+    | TOKEN_DIVEQ
+    | TOKEN_MODEQ
     | TOKEN_STRUCT
     | TOKEN_DOT
     | TOKEN_TRY

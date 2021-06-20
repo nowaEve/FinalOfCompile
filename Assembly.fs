@@ -35,6 +35,7 @@ type instruction =
     | THROW of int          //抛出异常
     | PUSHHDLR of int * label    //PUSH
     | POPHDLR                    //POP
+    | SLEEP
 
 //返回两个函数 restetLabels，newLabel
 let (resetLabels, newLabel) =
@@ -143,6 +144,9 @@ let CODEPUSHHR  = 29;
 [<Literal>]
 let CODEPOPHR   = 30;
 
+[<Literal>]
+let CODESLEEP   = 31
+
 // 获得标签在机器码中的地址
 // 记录当前(标签，地址) ==> 到labenv中
 // 没有参数，加一个地址，每多一个参数，加一个地址
@@ -180,6 +184,7 @@ let makelabenv (addr, labenv) instruction =
     | THROW i           -> (addr+2, labenv)
     | PUSHHDLR (exn ,lab) -> (addr+3, labenv)
     | POPHDLR           -> (addr+1, labenv)
+    | SLEEP             -> (addr+1, labenv)
 
 // getlab是得到标签所在地址的函数
 // let getlab lab = lookup labenv lab
@@ -214,6 +219,7 @@ let rec emitints getlab instruction ints =
     | PRINTC            -> CODEPRINTC   :: ints
     | LDARGS            -> CODELDARGS   :: ints
     | STOP              -> CODESTOP     :: ints
+    | SLEEP i           -> CODESLEEP    :: i            ::ints
     | THROW i           -> CODETHROW    :: i            :: ints
     | PUSHHDLR (exn, lab) -> CODEPUSHHR :: exn          :: getlab lab   :: ints
     | POPHDLR           -> CODEPOPHR    :: ints

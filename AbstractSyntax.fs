@@ -14,8 +14,8 @@ type IPrimitiveType =
 and IExpression = 
     | Access of IAccess                  (* x,   *x,     x[i]    *)
     | Assign of IAccess * IExpression    (* x=e, *x=e,   x[i]=e  *)
+    | AssignThird of string * IAccess * IExpression
     | Address of IAccess          
-
     | ConstInt of int   (*constant int*)
     | ConstString of string (*constant string*)
     | ConstFloat of float32 (*constant float*)
@@ -25,7 +25,6 @@ and IExpression =
     | UnaryPrimitiveOperator of string * IExpression
     | BinaryPrimitiveOperator of string * IExpression * IExpression
     | TernaryPrimitiveOperator of IExpression * IExpression * IExpression
-    
     | AndOperator of IExpression * IExpression
     | OrOperator of IExpression * IExpression
     | CallOperator of string * IExpression list
@@ -52,6 +51,7 @@ and IStatement =
     | Catch of IException * IStatement
     | Break
     | Continue
+    // | Sleep of IExpression
 
 and IException = 
     | Exception of string

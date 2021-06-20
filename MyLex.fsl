@@ -2,7 +2,7 @@
  
 module MyLex=
   
-open Microsoft.FSharp.Text.Lexing
+open FSharp.Text.Lexing
 open MyPar;
 
 let lexemeAsString lexbuf = 
@@ -35,6 +35,7 @@ let keyword s =
     | "catch"   -> CATCH
     | "throw"   -> THROW
     | "struct"  -> STRUCT
+    // | "sleep"   -> SLEEP
     | _         -> NAME s
  
 let cEscape s = 
@@ -50,7 +51,7 @@ let cEscape s =
     | "\\r"  -> '\r'
     | _      -> failwith "Lexer error: impossible C escape"
 }
-                        
+ // PLUSEQ MINUSEQ TIMESEQ DIVEQ MODEQ
 rule Token = parse
   | [' ' '\t' '\r'] { Token lexbuf }
   | '\n'            { lexbuf.EndPos <- lexbuf.EndPos.NextLine; Token lexbuf }
@@ -65,6 +66,11 @@ rule Token = parse
   | '/'             { DIV } 
   | "++"            { SELFPLUS } 
   | "--"            { SELFMINUS} 
+  | "+="            { PLUSEQ }
+  | "-="            { MINUSEQ }
+  | "*="            { TIMESEQ }
+  | "/="            { DIVEQ }
+  | "%="            { MODEQ}
   | '%'             { MOD }                     
   | '='             { ASSIGN } 
   | ".."            { RANGE  }
@@ -91,6 +97,7 @@ rule Token = parse
   | ','             { COMMA }
   | "//"            { EndLineComment lexbuf; Token lexbuf }
   | "/*"            { Comment lexbuf; Token lexbuf }
+  | "(*"            { Comment lexbuf; Token lexbuf }
   | '"'             { CSTSTRING (String [] lexbuf) }
   | ['\'']['a'-'z''A'-'Z''0'-'9']['\'']            
                     { try let single = lexemeAsString lexbuf in CSTCHAR (System.Char.Parse(single.Substring(1, 1))) with ex -> failwith "Char literal error." }
@@ -100,6 +107,8 @@ rule Token = parse
 and Comment = parse
    | "/*"           { Comment lexbuf; Comment lexbuf }
    | "*/"           { () }
+   | "(*"           { Comment lexbuf; Comment lexbuf }
+   | "*)"           { () }
    | '\n'           { lexbuf.EndPos <- lexbuf.EndPos.NextLine; Comment lexbuf }
    | (eof | '\026') { failwith "Lexer error: unterminated comment" }
    | _              { Comment lexbuf }

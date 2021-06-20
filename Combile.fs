@@ -194,16 +194,20 @@ let rec dellab labs =
     match labs with
         | lab :: tr ->   tr
         | []        ->   []
-//实现了switch等，厉害
+//实现了switch等
+// STMT 是要编译的语句，varEnv是局部和全局变量环境，funEnv是全局函数环境，label是
+// C是stmt之后的代码
 let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) (lablist : LabEnv) (structEnv : StructTypeEnv) (C : instruction list) : instruction list = 
     match stmt with
     // | Case (_, _)   ->  
     | If(e, stmt1, stmt2) ->
+        // 无条件跳转到C
         let (jumpend, C1) = makeJump C
         let (labelse, C2) = addLabel (cStmt stmt2 varEnv funEnv lablist structEnv C1)
         cExpr e varEnv funEnv lablist structEnv (IFZERO labelse :: cStmt stmt1 varEnv funEnv lablist structEnv (addJump jumpend C2))
     | While(e, body) ->
         let labbegin = newLabel()
+        // 条件跳转到C
         let (labend,Cend)   = addLabel C
         let lablist = labend :: labbegin :: lablist
         let (jumptest, C1) = 
@@ -395,7 +399,32 @@ and cExpr (e : IExpression) (varEnv : VarEnv) (funEnv : FunEnv) (lablist : LabEn
                 | ">="  -> LT   ::  addNOT C
                 | ">"   -> SWAP ::  LT  :: C
                 | "<="  -> SWAP ::  LT  :: addNOT C
-                | _     -> failwith "Error: unknown binary operator"))
+                | _     -> failwith "Error1: unknown binary operator"))
+    | AssignThird(ope,acc,e) ->
+        let rec tmp stat = 
+                    match stat with
+                    |Access(c) -> c  
+        cAccess acc varEnv funEnv lablist structEnv
+        ( cExpr e varEnv funEnv lablist structEnv
+            (match ope with
+            | "+=" ->
+                let ass = Assign (acc,BinaryPrimitiveOperator("+",Access(acc),e))
+                cExpr ass varEnv funEnv lablist structEnv (addINCSP -1 C)
+            | "-=" ->
+                let ass = Assign (acc,BinaryPrimitiveOperator("-",Access(acc),e))
+                cExpr ass varEnv funEnv lablist structEnv (addINCSP -1 C)
+            | "*=" ->
+                let ass = Assign (acc,BinaryPrimitiveOperator("*",Access(acc),e))
+                cExpr ass varEnv funEnv lablist structEnv (addINCSP -1 C)
+            | "/=" ->
+                let ass = Assign (acc,BinaryPrimitiveOperator("/",Access(acc),e))
+                cExpr ass varEnv funEnv lablist structEnv (addINCSP -1 C)
+            | "%=" ->
+                let ass = Assign (acc,BinaryPrimitiveOperator("%",Access(acc),e))
+                cExpr ass varEnv funEnv lablist structEnv (addINCSP -1 C)
+            | _     -> failwith "Error2: unknown operator"
+            )
+        )
     | TernaryPrimitiveOperator(cond, e1, e2)    ->
         let (jumpend, C1) = makeJump C
         let (labelse, C2) = addLabel (cExpr e2 varEnv funEnv lablist structEnv C1)
