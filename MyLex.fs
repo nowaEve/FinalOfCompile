@@ -37,7 +37,7 @@ let keyword s =
     | "catch"   -> CATCH
     | "throw"   -> THROW
     | "struct"  -> STRUCT
-    // | "sleep"   -> SLEEP
+    | "sleep"   -> SLEEP
     | _         -> NAME s
  
 let cEscape s = 

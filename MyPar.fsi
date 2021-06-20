@@ -60,6 +60,7 @@ type token =
   | IN
   | RANGE
   | DO
+  | SLEEP
   | CSTCHAR of (char)
   | CSTSTRING of (string)
   | NAME of (string)
@@ -126,6 +127,7 @@ type tokenId =
     | TOKEN_IN
     | TOKEN_RANGE
     | TOKEN_DO
+    | TOKEN_SLEEP
     | TOKEN_CSTCHAR
     | TOKEN_CSTSTRING
     | TOKEN_NAME

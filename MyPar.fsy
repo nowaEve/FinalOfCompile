@@ -21,7 +21,7 @@ let third  (_, _, c) = c
 %token <char> CSTCHAR
 // %token SLEEP
 // 增加FLOAT，SWITCH CASE FOR IN RANGE STRING DO
-%token CHAR ELSE IF INT FLOAT STRING NULL PRINT PRINTLN RETURN VOID WHILE SWITCH CASE FOR IN RANGE DO 
+%token CHAR ELSE IF INT FLOAT STRING NULL PRINT PRINTLN RETURN VOID WHILE SWITCH CASE FOR IN RANGE DO SLEEP
 // 异常处理
 %token TRY CATCH THROW
 // 结构体
@@ -166,7 +166,7 @@ StmtM:  /* No unbalanced if-else */
   //try stmtM stmtCatch
   | TRY StmtM StmtCatch                 { Try($2,$3) }
   // sleep(2)
-  // | SLEEP LPAR Expr RPAR SEMI           { Sleep($3)}        
+  | SLEEP LPAR Expr RPAR SEMI           { Sleep($3)}        
 ;
 //switch-case中，case AtExprNotAccess:StmtM 
 StmtCase:
@@ -188,7 +188,7 @@ StmtU:
   | IF LPAR Expr RPAR Stmt              { If($3, $5, Block []) } //if(Expr) stmt
   | WHILE LPAR Expr RPAR StmtU          { While($3, $5)        } //while(Expr) stmtU
   | DO StmtU WHILE LPAR Expr RPAR SEMI  { DoWhile($2, $5)      } //do StmtU while (Expr);
-  // | SLEEP LPAR Expr RPAR SEMI           { sleep($3)}
+  // | SLEEP LPAR Expr RPAR SEMI           { Sleep($3)}
 ;
 
 Expr: 
@@ -204,6 +204,7 @@ ExprNotAccess:
   | Expr QUEST Expr COLON Expr          { TernaryPrimitiveOperator($1,$3,$5)    }
   | NOT Expr                            { UnaryPrimitiveOperator("!", $2)      }
   | PRINT Expr                          { UnaryPrimitiveOperator("printi", $2) }
+  | SLEEP Expr                          { UnaryPrimitiveOperator("sleep",$2)} 
   | Expr SELFPLUS                       { UnaryPrimitiveOperator("I++", $1)     }
   | Expr SELFMINUS                      { UnaryPrimitiveOperator("I--", $1)     }
   | SELFPLUS Expr                       { UnaryPrimitiveOperator("++I", $2)     }

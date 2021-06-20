@@ -51,7 +51,7 @@ and IStatement =
     | Catch of IException * IStatement
     | Break
     | Continue
-    // | Sleep of IExpression
+    | Sleep of IExpression
 
 and IException = 
     | Exception of string

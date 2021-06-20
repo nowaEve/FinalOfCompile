@@ -6,11 +6,11 @@ import java.util.ArrayList;
 // 模式匹配
 import java.util.regex.Pattern;
 
-public class Machine{
+public class Machine extends Thread{
     // 规定堆栈的大小
     private final static int STACKSIZE = 1000;
 
-        public static void main(String[] args) throws FileNotFoundException, IOException, OperatorError, TypeError {
+        public static void main(String[] args) throws FileNotFoundException, IOException, OperatorError, TypeError,InterruptedException {
         // 参数长度
         if (args.length == 0)
             System.out.println("Usage: java Machine <programfile> <arg1> ...\n");
@@ -20,7 +20,7 @@ public class Machine{
         }
     }
 
-    static void execute(String[] args, boolean trace) throws FileNotFoundException, IOException, OperatorError, TypeError {
+    static void execute(String[] args, boolean trace) throws FileNotFoundException, IOException, OperatorError, TypeError,InterruptedException {
         // 读程序从文件中，args[0]为文件名，为*.out
         ArrayList<Integer> program = readfile(args[0]);
         // 堆栈
@@ -58,7 +58,7 @@ public class Machine{
     }
 
     // 进入时，程序已成为数字指令集
-    private static int execCode(ArrayList<Integer> program, basicType[] stack, basicType[] inputArgs, boolean trace) throws TypeError, OperatorError {
+    private static int execCode(ArrayList<Integer> program, basicType[] stack, basicType[] inputArgs, boolean trace) throws TypeError, OperatorError,InterruptedException{
         int bp = -999;  //基址指针，方便本地变量的访问
         int sp = -1;    //栈顶指针
         int pc = 0;     //程序计数器，下一条指令载入
@@ -229,6 +229,18 @@ public class Machine{
                     }
 
                     System.out.print(String.valueOf(result) + " ");
+                    break;
+                }
+                case Instruction.SLEEP: {
+                   long result;
+                    if(stack[sp] instanceof IntType){
+                        result = ((IntType)stack[sp]).getValue();
+                    }else if(stack[sp] instanceof FloatType){
+                        throw new TypeError("TypeError: sleep args is not int");
+                    }else {
+                        throw new TypeError("TypeError: sleep args is not int");
+                    }
+                    Thread.sleep(result);
                     break;
                 }
                 case Instruction.PRINTC:
@@ -417,6 +429,7 @@ public static basicType binaryOperator(basicType lhs, basicType rhs, String oper
             case Instruction.TCALL:  return "TCALL " + program.get(pc+1) + " " + program.get(pc+2) + " " +program.get(pc+3);
             case Instruction.RET:    return "RET " + program.get(pc+1);
             case Instruction.PRINTI: return "PRINTI";
+            case Instruction.SLEEP:  return "SLEEP";
             case Instruction.PRINTC: return "PRINTC";
             case Instruction.LDARGS: return "LDARGS";
             case Instruction.STOP:   return "STOP";
@@ -467,9 +480,9 @@ public static basicType binaryOperator(basicType lhs, basicType rhs, String oper
 
 
 // 产生machinetrace.class
-class Machinetrace {
+class Machinetrace{
     public static void main(String[] args)
-            throws FileNotFoundException, IOException, OperatorError, TypeError {
+            throws FileNotFoundException, IOException, OperatorError, TypeError,InterruptedException {
         if (args.length == 0)
             System.out.println("Usage: java Machinetrace <programfile> <arg1> ...\n");
         else

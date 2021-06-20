@@ -219,7 +219,7 @@ let rec emitints getlab instruction ints =
     | PRINTC            -> CODEPRINTC   :: ints
     | LDARGS            -> CODELDARGS   :: ints
     | STOP              -> CODESTOP     :: ints
-    | SLEEP i           -> CODESLEEP    :: i            ::ints
+    | SLEEP            -> CODESLEEP     :: ints
     | THROW i           -> CODETHROW    :: i            :: ints
     | PUSHHDLR (exn, lab) -> CODEPUSHHR :: exn          :: getlab lab   :: ints
     | POPHDLR           -> CODEPOPHR    :: ints

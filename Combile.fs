@@ -363,6 +363,7 @@ and cExpr (e : IExpression) (varEnv : VarEnv) (funEnv : FunEnv) (lablist : LabEn
             | "!"       -> addNOT C
             | "printi"  -> PRINTI :: C
             | "printc"  -> PRINTC :: C
+            | "sleep"   -> SLEEP :: C
             | "I++" -> 
                 let ass = Assign (tmp e1,BinaryPrimitiveOperator ("+",Access (tmp e1),ConstInt 1))
                 cExpr ass varEnv funEnv lablist structEnv (addINCSP -1 C)
