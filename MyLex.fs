@@ -1,8 +1,5 @@
 module MyLex
 # 1 "MyLex.fsl"
- 
- 
-module MyLex=
   
 open FSharp.Text.Lexing
 open MyPar;

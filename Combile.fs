@@ -93,13 +93,13 @@ let rec addCST i C =
     | (_, IFNZRO lab :: C1) -> addGOTO lab C1
     | _                     -> CSTI i :: C
 
-// let rec addCSTF i C =
-//     match (i, C) with
-//     | _                     -> (CSTF (System.BitConverter.ToInt32((System.BitConverter.GetBytes(float32(i)), 0)))) :: C
+let rec addCSTF i C =
+    match (i, C) with
+    | _                     -> (CSTF (System.BitConverter.ToInt32((System.BitConverter.GetBytes(float32(i))), 0))) :: C
 
-// let rec addCSTC i C =
-//     match (i, C) with
-//     | _                     -> (CSTC ((int32)(System.BitConverter.ToInt16((System.BitConverter.GetBytes(char(i)), 0))))) :: C
+let rec addCSTC i C =
+    match (i, C) with
+    | _                     -> (CSTC ((int32)(System.BitConverter.ToInt16((System.BitConverter.GetBytes(char(i))), 0)))) :: C
 
 type 'data Env = (string * 'data) list
 
@@ -347,8 +347,8 @@ and cExpr (e : IExpression) (varEnv : VarEnv) (funEnv : FunEnv) (lablist : LabEn
     | Access acc        -> cAccess acc varEnv funEnv lablist structEnv (LDI :: C)
     | Assign(acc, e)    -> cAccess acc varEnv funEnv lablist structEnv (cExpr e varEnv funEnv lablist structEnv (STI :: C))
     | ConstInt i        -> addCST i C
-    // | ConstFloat i      -> addCSTF i C
-    // | ConstChar i       -> addCSTC i C
+    | ConstFloat i      -> addCSTF i C
+    | ConstChar i       -> addCSTC i C
     | Address acc       -> cAccess acc varEnv funEnv lablist structEnv C
     | UnaryPrimitiveOperator(ope, e1) ->
         let rec tmp stat =

@@ -17,8 +17,8 @@ type instruction =
     | NOT               // !=
     | DUP               //复制栈顶
     | SWAP              //交换
-    | LDI               //SP装当前地址所在的下标志，s[sp]为当前地址，s[s[sp]]为地址的值
-    | STI               //设置set s[s[sp-1]]，往当前sp的更大的地方赋值，设置栈顶
+    | LDI               //取地址的值，SP装当前地址所在的下标，s[sp]为当前地址，s[s[sp]]为地址的值
+    | STI               //set s[s[sp-1]] sp在栈顶，sp-1为栈顶下面一个下标，s[sp-1]取栈顶下面一个地方的值,为地址，赋值，s[sp]是新进来的值
     | GETBP             // 得到BP：栈基址寄存器，栈寻址寄存器
     | GETSP             // 得到栈指针，栈顶指针寄存器
     | INCSP of int      // 增加堆栈顶部
