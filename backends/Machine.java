@@ -224,8 +224,10 @@ public class Machine extends Thread{
                         result = ((IntType)stack[sp]).getValue();
                     }else if(stack[sp] instanceof FloatType){
                         result = ((FloatType)stack[sp]).getValue();
-                    }else {
-                        result = ((CharType)stack[sp]).getValue();
+                    }else if(stack[sp] instanceof StringType){
+                        result = ((StringType)stack[sp]).getValue();
+                    }else{
+                        result = ((StringType)stack[sp]).getValue();
                     }
 
                     System.out.print(String.valueOf(result) + " ");
@@ -304,7 +306,14 @@ public static basicType binaryOperator(basicType lhs, basicType rhs, String oper
             flag = 1;
         } else if (lhs instanceof IntType) {
             left = ((IntType) lhs).getValue();
-        } else {
+        } else if (operator=="+"&&lhs instanceof CharType) {
+            left = (((CharType) lhs).getValue());
+            flag = 2;
+        } else if (operator=="+"&&lhs instanceof StringType){
+            left = (((StringType)lhs).getValue());
+            flag = 3;
+        }
+        else {
             throw new TypeError("TypeError: Left type is not int or float");
         }
         if (rhs instanceof FloatType) {
@@ -312,6 +321,12 @@ public static basicType binaryOperator(basicType lhs, basicType rhs, String oper
             flag = 1;
         } else if (rhs instanceof IntType) {
             right = ((IntType) rhs).getValue();
+        }  else if (operator=="+"&&rhs instanceof CharType) {
+            right = (((CharType) rhs).getValue());
+            flag = 2;
+        } else if (operator=="+"&&rhs instanceof StringType){
+            right = (((StringType)rhs).getValue());
+            flag = 3;
         } else {
             throw new TypeError("TypeError: Right type is not int or float");
         }
@@ -321,6 +336,15 @@ public static basicType binaryOperator(basicType lhs, basicType rhs, String oper
             case "+":{
                 if (flag == 1) {
                     result =  new FloatType(Float.parseFloat(String.valueOf(left)) + Float.parseFloat(String.valueOf(right)));
+                } else if(flag == 2){
+                    StringType achar = new StringType((char)left);
+                    String astring = achar.addChar(String.valueOf(right));
+                    result = new StringType(astring);
+                    // System.out.println("4:"+result);
+                } else if(flag == 3){
+                    StringType astring = new StringType(String.valueOf(left));
+                    String astrings = astring.addChar(String.valueOf(right));
+                    result = new StringType(astrings);
                 } else {
                     result = new IntType(Integer.parseInt(String.valueOf(left)) + Integer.parseInt(String.valueOf(right)));
                 }

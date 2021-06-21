@@ -223,244 +223,244 @@ let trans : uint16[] array =
     (* State 82 *)
      [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 82us; 82us; 82us; 82us; 82us; 82us; 82us; 82us; 82us; 82us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 255us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
     |] 
-let actions : uint16[] = [|65535us; 0us; 3us; 7us; 4us; 4us; 5us; 6us; 7us; 2us; 1us; 65535us; 0us; 1us; 1us; 2us; 65535us; 6us; 6us; 6us; 4us; 5us; 5us; 6us; 2us; 1us; 3us; 0us; 65535us; 0us; 1us; 2us; 4us; 5us; 6us; 7us; 8us; 16us; 17us; 30us; 31us; 21us; 22us; 23us; 24us; 46us; 29us; 32us; 33us; 34us; 35us; 36us; 37us; 38us; 39us; 43us; 46us; 45us; 46us; 65535us; 44us; 42us; 28us; 27us; 26us; 25us; 20us; 18us; 19us; 15us; 14us; 40us; 41us; 13us; 10us; 12us; 9us; 11us; 4us; 2us; 65535us; 3us; 3us; |]
+let actions : uint16[] = [|3us; 0us; 4us; 8us; 5us; 5us; 6us; 7us; 8us; 2us; 1us; 65535us; 0us; 1us; 1us; 2us; 65535us; 6us; 6us; 6us; 4us; 5us; 5us; 6us; 2us; 1us; 3us; 0us; 65535us; 0us; 1us; 2us; 4us; 5us; 6us; 7us; 8us; 16us; 17us; 30us; 31us; 21us; 22us; 23us; 24us; 46us; 29us; 32us; 33us; 34us; 35us; 36us; 37us; 38us; 39us; 43us; 46us; 45us; 46us; 65535us; 44us; 42us; 28us; 27us; 26us; 25us; 20us; 18us; 19us; 15us; 14us; 40us; 41us; 13us; 10us; 12us; 9us; 11us; 4us; 2us; 65535us; 3us; 3us; |]
 let _fslex_tables = FSharp.Text.Lexing.UnicodeTables.Create(trans,actions)
 let rec _fslex_dummy () = _fslex_dummy() 
 // Rule Token
 and Token  lexbuf =
   match _fslex_tables.Interpret(28,lexbuf) with
   | 0 -> ( 
-# 56 "MyLex.fsl"
+# 60 "MyLex.fsl"
                                      Token lexbuf 
 # 235 "MyLex.fs"
           )
   | 1 -> ( 
-# 57 "MyLex.fsl"
+# 61 "MyLex.fsl"
                                      lexbuf.EndPos <- lexbuf.EndPos.NextLine; Token lexbuf 
 # 240 "MyLex.fs"
           )
   | 2 -> ( 
-# 58 "MyLex.fsl"
+# 62 "MyLex.fsl"
                                      CSTINT (System.Int32.Parse (lexemeAsString lexbuf)) 
 # 245 "MyLex.fs"
           )
   | 3 -> ( 
-# 60 "MyLex.fsl"
+# 64 "MyLex.fsl"
                                      CSTFLOAT (System.Single.Parse (lexemeAsString lexbuf)) 
 # 250 "MyLex.fs"
           )
   | 4 -> ( 
-# 62 "MyLex.fsl"
+# 66 "MyLex.fsl"
                                      keyword (lexemeAsString lexbuf) 
 # 255 "MyLex.fs"
           )
   | 5 -> ( 
-# 63 "MyLex.fsl"
+# 67 "MyLex.fsl"
                                      PLUS 
 # 260 "MyLex.fs"
           )
   | 6 -> ( 
-# 64 "MyLex.fsl"
+# 68 "MyLex.fsl"
                                      MINUS 
 # 265 "MyLex.fs"
           )
   | 7 -> ( 
-# 65 "MyLex.fsl"
+# 69 "MyLex.fsl"
                                      TIMES 
 # 270 "MyLex.fs"
           )
   | 8 -> ( 
-# 66 "MyLex.fsl"
+# 70 "MyLex.fsl"
                                      DIV 
 # 275 "MyLex.fs"
           )
   | 9 -> ( 
-# 67 "MyLex.fsl"
+# 71 "MyLex.fsl"
                                      SELFPLUS 
 # 280 "MyLex.fs"
           )
   | 10 -> ( 
-# 68 "MyLex.fsl"
+# 72 "MyLex.fsl"
                                      SELFMINUS
 # 285 "MyLex.fs"
           )
   | 11 -> ( 
-# 69 "MyLex.fsl"
+# 73 "MyLex.fsl"
                                      PLUSEQ 
 # 290 "MyLex.fs"
           )
   | 12 -> ( 
-# 70 "MyLex.fsl"
+# 74 "MyLex.fsl"
                                      MINUSEQ 
 # 295 "MyLex.fs"
           )
   | 13 -> ( 
-# 71 "MyLex.fsl"
+# 75 "MyLex.fsl"
                                      TIMESEQ 
 # 300 "MyLex.fs"
           )
   | 14 -> ( 
-# 72 "MyLex.fsl"
+# 76 "MyLex.fsl"
                                      DIVEQ 
 # 305 "MyLex.fs"
           )
   | 15 -> ( 
-# 73 "MyLex.fsl"
+# 77 "MyLex.fsl"
                                      MODEQ
 # 310 "MyLex.fs"
           )
   | 16 -> ( 
-# 74 "MyLex.fsl"
+# 78 "MyLex.fsl"
                                      MOD 
 # 315 "MyLex.fs"
           )
   | 17 -> ( 
-# 75 "MyLex.fsl"
+# 79 "MyLex.fsl"
                                      ASSIGN 
 # 320 "MyLex.fs"
           )
   | 18 -> ( 
-# 76 "MyLex.fsl"
+# 80 "MyLex.fsl"
                                      RANGE  
 # 325 "MyLex.fs"
           )
   | 19 -> ( 
-# 77 "MyLex.fsl"
+# 81 "MyLex.fsl"
                                      EQ 
 # 330 "MyLex.fs"
           )
   | 20 -> ( 
-# 78 "MyLex.fsl"
+# 82 "MyLex.fsl"
                                      NE 
 # 335 "MyLex.fs"
           )
   | 21 -> ( 
-# 79 "MyLex.fsl"
+# 83 "MyLex.fsl"
                                      GT 
 # 340 "MyLex.fs"
           )
   | 22 -> ( 
-# 80 "MyLex.fsl"
+# 84 "MyLex.fsl"
                                      LT 
 # 345 "MyLex.fs"
           )
   | 23 -> ( 
-# 81 "MyLex.fsl"
+# 85 "MyLex.fsl"
                                      COLON 
 # 350 "MyLex.fs"
           )
   | 24 -> ( 
-# 82 "MyLex.fsl"
+# 86 "MyLex.fsl"
                                      QUEST 
 # 355 "MyLex.fs"
           )
   | 25 -> ( 
-# 83 "MyLex.fsl"
+# 87 "MyLex.fsl"
                                      GE 
 # 360 "MyLex.fs"
           )
   | 26 -> ( 
-# 84 "MyLex.fsl"
+# 88 "MyLex.fsl"
                                      LE 
 # 365 "MyLex.fs"
           )
   | 27 -> ( 
-# 85 "MyLex.fsl"
+# 89 "MyLex.fsl"
                                      SEQOR 
 # 370 "MyLex.fs"
           )
   | 28 -> ( 
-# 86 "MyLex.fsl"
+# 90 "MyLex.fsl"
                                      SEQAND 
 # 375 "MyLex.fs"
           )
   | 29 -> ( 
-# 87 "MyLex.fsl"
+# 91 "MyLex.fsl"
                                      AMP 
 # 380 "MyLex.fs"
           )
   | 30 -> ( 
-# 88 "MyLex.fsl"
+# 92 "MyLex.fsl"
                                      DOT 
 # 385 "MyLex.fs"
           )
   | 31 -> ( 
-# 89 "MyLex.fsl"
+# 93 "MyLex.fsl"
                                      NOT 
 # 390 "MyLex.fs"
           )
   | 32 -> ( 
-# 90 "MyLex.fsl"
+# 94 "MyLex.fsl"
                                      LPAR 
 # 395 "MyLex.fs"
           )
   | 33 -> ( 
-# 91 "MyLex.fsl"
+# 95 "MyLex.fsl"
                                      RPAR 
 # 400 "MyLex.fs"
           )
   | 34 -> ( 
-# 92 "MyLex.fsl"
+# 96 "MyLex.fsl"
                                      LBRACE 
 # 405 "MyLex.fs"
           )
   | 35 -> ( 
-# 93 "MyLex.fsl"
+# 97 "MyLex.fsl"
                                      RBRACE 
 # 410 "MyLex.fs"
           )
   | 36 -> ( 
-# 94 "MyLex.fsl"
+# 98 "MyLex.fsl"
                                      LBRACK 
 # 415 "MyLex.fs"
           )
   | 37 -> ( 
-# 95 "MyLex.fsl"
+# 99 "MyLex.fsl"
                                      RBRACK 
 # 420 "MyLex.fs"
           )
   | 38 -> ( 
-# 96 "MyLex.fsl"
+# 100 "MyLex.fsl"
                                      SEMI 
 # 425 "MyLex.fs"
           )
   | 39 -> ( 
-# 97 "MyLex.fsl"
+# 101 "MyLex.fsl"
                                      COMMA 
 # 430 "MyLex.fs"
           )
   | 40 -> ( 
-# 98 "MyLex.fsl"
+# 102 "MyLex.fsl"
                                      EndLineComment lexbuf; Token lexbuf 
 # 435 "MyLex.fs"
           )
   | 41 -> ( 
-# 99 "MyLex.fsl"
+# 103 "MyLex.fsl"
                                      Comment lexbuf; Token lexbuf 
 # 440 "MyLex.fs"
           )
   | 42 -> ( 
-# 100 "MyLex.fsl"
+# 104 "MyLex.fsl"
                                      Comment lexbuf; Token lexbuf 
 # 445 "MyLex.fs"
           )
   | 43 -> ( 
-# 101 "MyLex.fsl"
+# 105 "MyLex.fsl"
                                      CSTSTRING (String [] lexbuf) 
 # 450 "MyLex.fs"
           )
   | 44 -> ( 
-# 103 "MyLex.fsl"
+# 107 "MyLex.fsl"
                                      try let single = lexemeAsString lexbuf in CSTCHAR (System.Char.Parse(single.Substring(1, 1))) with ex -> failwith "Char literal error." 
 # 455 "MyLex.fs"
           )
   | 45 -> ( 
-# 104 "MyLex.fsl"
+# 108 "MyLex.fsl"
                                      EOF 
 # 460 "MyLex.fs"
           )
   | 46 -> ( 
-# 105 "MyLex.fsl"
+# 109 "MyLex.fsl"
                                      failwith "Lexer error: illegal symbol" 
 # 465 "MyLex.fs"
           )
@@ -469,37 +469,37 @@ and Token  lexbuf =
 and Comment  lexbuf =
   match _fslex_tables.Interpret(16,lexbuf) with
   | 0 -> ( 
-# 108 "MyLex.fsl"
+# 112 "MyLex.fsl"
                                      Comment lexbuf; Comment lexbuf 
 # 474 "MyLex.fs"
           )
   | 1 -> ( 
-# 109 "MyLex.fsl"
+# 113 "MyLex.fsl"
                                      () 
 # 479 "MyLex.fs"
           )
   | 2 -> ( 
-# 110 "MyLex.fsl"
+# 114 "MyLex.fsl"
                                      Comment lexbuf; Comment lexbuf 
 # 484 "MyLex.fs"
           )
   | 3 -> ( 
-# 111 "MyLex.fsl"
+# 115 "MyLex.fsl"
                                      () 
 # 489 "MyLex.fs"
           )
   | 4 -> ( 
-# 112 "MyLex.fsl"
+# 116 "MyLex.fsl"
                                      lexbuf.EndPos <- lexbuf.EndPos.NextLine; Comment lexbuf 
 # 494 "MyLex.fs"
           )
   | 5 -> ( 
-# 113 "MyLex.fsl"
+# 117 "MyLex.fsl"
                                      failwith "Lexer error: unterminated comment" 
 # 499 "MyLex.fs"
           )
   | 6 -> ( 
-# 114 "MyLex.fsl"
+# 118 "MyLex.fsl"
                                      Comment lexbuf 
 # 504 "MyLex.fs"
           )
@@ -508,17 +508,17 @@ and Comment  lexbuf =
 and EndLineComment  lexbuf =
   match _fslex_tables.Interpret(11,lexbuf) with
   | 0 -> ( 
-# 117 "MyLex.fsl"
+# 121 "MyLex.fsl"
                                      lexbuf.EndPos <- lexbuf.EndPos.NextLine 
 # 513 "MyLex.fs"
           )
   | 1 -> ( 
-# 118 "MyLex.fsl"
+# 122 "MyLex.fsl"
                                      () 
 # 518 "MyLex.fs"
           )
   | 2 -> ( 
-# 119 "MyLex.fsl"
+# 123 "MyLex.fsl"
                                      EndLineComment lexbuf 
 # 523 "MyLex.fs"
           )
@@ -527,44 +527,49 @@ and EndLineComment  lexbuf =
 and String chars lexbuf =
   match _fslex_tables.Interpret(0,lexbuf) with
   | 0 -> ( 
-# 124 "MyLex.fsl"
+# 133 "MyLex.fsl"
                        Microsoft.FSharp.Core.String.concat "" (List.map string (List.rev chars)) 
 # 532 "MyLex.fs"
           )
   | 1 -> ( 
-# 126 "MyLex.fsl"
+# 135 "MyLex.fsl"
                        String (cEscape (lexemeAsString lexbuf) :: chars) lexbuf 
 # 537 "MyLex.fs"
           )
   | 2 -> ( 
-# 128 "MyLex.fsl"
+# 137 "MyLex.fsl"
                        String ('\'' :: chars) lexbuf 
 # 542 "MyLex.fs"
           )
   | 3 -> ( 
-# 130 "MyLex.fsl"
-                       failwith "Lexer error: illegal escape sequence" 
+# 139 "MyLex.fsl"
+                       String ('\"' :: chars) lexbuf 
 # 547 "MyLex.fs"
           )
   | 4 -> ( 
-# 132 "MyLex.fsl"
-                       failwith "Lexer error: unterminated string" 
+# 141 "MyLex.fsl"
+                       failwith "Lexer error: illegal escape sequence" 
 # 552 "MyLex.fs"
           )
   | 5 -> ( 
-# 134 "MyLex.fsl"
-                       failwith "Lexer error: newline in string" 
+# 143 "MyLex.fsl"
+                       failwith "Lexer error: unterminated string" 
 # 557 "MyLex.fs"
           )
   | 6 -> ( 
-# 136 "MyLex.fsl"
-                       failwith "Lexer error: invalid character in string" 
+# 145 "MyLex.fsl"
+                       failwith "Lexer error: newline in string" 
 # 562 "MyLex.fs"
           )
   | 7 -> ( 
-# 138 "MyLex.fsl"
-                       String (char (lexbuf.LexemeChar 0) :: chars) lexbuf 
+# 147 "MyLex.fsl"
+                       failwith "Lexer error: invalid character in string" 
 # 567 "MyLex.fs"
+          )
+  | 8 -> ( 
+# 149 "MyLex.fsl"
+                       String (char (lexbuf.LexemeChar 0) :: chars) lexbuf 
+# 572 "MyLex.fs"
           )
   | _ -> failwith "String"
 

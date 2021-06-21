@@ -8,13 +8,12 @@ public class CharType extends basicType {
     }
 
     public CharType(char c){
-        value = c;
+        value = c;  
     }
 
     public char getValue() {
         return value;
     }
-
     public void setValue(char value) {
         this.value = value;
     }
