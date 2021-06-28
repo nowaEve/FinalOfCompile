@@ -213,22 +213,28 @@ let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) (lablist : LabEnv) (struc
         let (jumptest, C1) = 
             makeJump (cExpr e varEnv funEnv lablist structEnv (IFNZRO labbegin :: Cend))
         addJump jumptest (Label labbegin :: cStmt body varEnv funEnv lablist structEnv C1)
-
     | Switch(e,cases)   ->
+        // addLabel C 条件跳转到C,label的感觉是字符串命令，C1则是接下来的语句
         let (labend, C1) = addLabel C
+        // 将遇到的label加入到lablist中
         let lablist = labend :: lablist
+
         let rec everycase c  = 
             match c with
             | [Case(cond,body)] -> 
                 let (label,C2) = addLabel(cStmt body varEnv funEnv lablist structEnv C1 )
+                // (IFZERO labend :: C2)后面没用语句了
                 let (label2, C3) = addLabel( cExpr (BinaryPrimitiveOperator ("==",e,cond)) varEnv funEnv lablist structEnv (IFZERO labend :: C2))
                 (label,label2,C3)
             | Case(cond,body) :: tr->
+                // 后续还要进行，没用遇到break
                 let (labnextbody,labnext,C2) = everycase tr
                 let (label, C3) = addLabel(cStmt body varEnv funEnv lablist structEnv (addGOTO labnextbody C2))
                 let (label2, C4) = addLabel( cExpr (BinaryPrimitiveOperator ("==",e,cond)) varEnv funEnv lablist structEnv (IFZERO labnext :: C3))
                 (label,label2,C4)
-            | [] -> (labend, labend,C1)
+            // 直接就为空
+            | [] -> (labend, labend,C1) 
+
         let (label,label2,C2) = everycase cases
         C2
     | Case(cond,body)  ->

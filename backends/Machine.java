@@ -78,6 +78,18 @@ public class Machine extends Thread{
                     stack[sp + 1] = new CharType((char)(program.get(pc++).intValue())); sp++; break;
                 // 操作
                 case Instruction.ADD: { // 3 4 +，此时栈顶的值为4，4出栈，3为sp-1处，3处变为7
+                    // if((String.valueOf(stack[sp-1])).indexOf(String.valueOf("."))!=-1){
+                    //     float x = Float.parseFloat(String.valueOf(stack[sp-1])) + Float.parseFloat(String.valueOf(stack[sp]));
+                    //     FloatType ft = new FloatType(x);
+                    //     stack[sp-1] = ft;
+                    //     sp--;
+                    // }
+                    // else{
+                    //     int x = Integer.parseInt(String.valueOf(stack[sp-1])) + Integer.parseInt(String.valueOf(stack[sp]));
+                    //     IntType it = new IntType(x);
+                    //     stack[sp-1] = it;
+                    //     sp--;
+                    // }
                     stack[sp - 1] = binaryOperator(stack[sp-1], stack[sp], "+");
                     sp--; //后一个数字出栈
                     break;
@@ -96,7 +108,18 @@ public class Machine extends Thread{
                 // hr的存在不懂，//hr是上一步的地方 ？
                 //增加异常处理
                 case Instruction.DIV: //3 4 / 保证4所表示的不为0
-                    if(((IntType)stack[sp]).getValue()==0)
+                    int flag = 0;
+                    if(stack[sp] instanceof FloatType){
+                        if(((FloatType)stack[sp]).getValue()==0){
+                            flag = 1;
+                        }
+                    }
+                    else if(stack[sp] instanceof IntType){
+                        if(((IntType)stack[sp]).getValue()==0){
+                            flag = 1;
+                        }
+                    }
+                    if(flag==1)
                     {
                         System.out.println("hr:"+hr+" exception:"+1);
                         while (hr != -1 && ((IntType)stack[hr]).getValue() != 1 )
@@ -317,7 +340,7 @@ public static basicType binaryOperator(basicType lhs, basicType rhs, String oper
             throw new TypeError("TypeError: Left type is not int or float");
         }
         if (rhs instanceof FloatType) {
-            right = ((FloatType) rhs).getValue();
+            right = ((FloatType) rhs).getValue();;
             flag = 1;
         } else if (rhs instanceof IntType) {
             right = ((IntType) rhs).getValue();
