@@ -127,7 +127,7 @@
 
   ```sh
   open ParseAndComp;;
-  compileToFile (fromFile "test/exfloat.c") "test/exfloat.out";;  
+  compileToFile (fromFile "test/ex2.c") "test/ex2t.out";;  
   ```
 
 * 中间表示(指令集)
@@ -416,65 +416,65 @@ void main(int n) {
 
 ![](img/ex2(addeq)运行.png)
 
-1. 循环的多种实现：do-while
+##### 6.循环的多种实现：do-while
 
-   简介：先判断，再进行运行
+简介：先判断，再进行运行
 
-   前端编译为指令集:
+前端编译为指令集:
 
-   ![](img/ex7(while).png)
+![](img/ex7(while).png)
 
-   后端运行结果：运行与运行栈追踪
+后端运行结果：运行与运行栈追踪
 
-   ![](img/ex7(while)运行.png)
+![](img/ex7(while)运行.png)
 
-2. for 循环
+##### 7. for 循环
 
-   简介：for循环
+简介：for循环
 
-   前端编译为指令集：
+前端编译为指令集：
 
-   ![](img/ex8(forloop).png)
+![](img/ex8(forloop).png)
 
-   后端运行，运行与运行栈追踪：
+后端运行，运行与运行栈追踪：
 
-   ![](img/ex8(forloop)运行.png)
+![](img/ex8(forloop)运行.png)
 
-3. 自增操作
+##### 8. 自增操作
 
-   简介：实现i++，i--的操作
+简介：实现i++，i--的操作
 
-   ```c
-   int main(){
-       int i = 8;
-       i++;
-       print i;
-       i++;
-       print i;
-       i--;
-       print i;
-   }
-   ```
+```c
+int main(){
+    int i = 8;
+    i++;
+    print i;
+    i++;
+    print i;
+    i--;
+    print i;
+}
+```
 
-   前端编译为指令集：
+前端编译为指令集：
 
-   ![](img/ex9(selfadd).png)
+![](img/ex9(selfadd).png)
 
-   后端运行，运行与运行栈追踪：
+后端运行，运行与运行栈追踪：
 
-   ![](img/ex9(selfadd)运行.png)
+![](img/ex9(selfadd)运行.png)
 
-4. switch-case
+9.switch-case
 
-   简介：类似于C语言的switch-case，当没有break时候，匹配到一个case后，执行该case的body，并且会往下执行所有case的body。没有匹配到case时，不会执行body，且向下寻找匹配的case
+简介：类似于C语言的switch-case，当没有break时候，匹配到一个case后，执行该case的body，并且会往下执行所有case的body。没有匹配到case时，不会执行body，且向下寻找匹配的case
 
-   前端编译为指令集：
+前端编译为指令集：
 
-   ![](img/ex10(switch).png)
+![](img/ex10(switch).png)
 
-   后端运行，运行与运行栈追踪：
+后端运行，运行与运行栈追踪：
 
-   ![](img/ex10(switch)运行.png)
+![](img/ex10(switch)运行.png)
 
 ### 后端部分
 
@@ -583,6 +583,22 @@ void main(int n) {
    ![](img/异常代码.png)
 
    ![](img/异常追溯.png)
+
+---
+
+## 6. 提交记录及分工
+
+---
+
+* 分工
+
+  | 姓名   | 分工 |
+  | ------ | ---- |
+  | 朱宇欢 | 全部 |
+
+* 提交记录
+
+![](img/提交记录.png)
 
 ---
 
